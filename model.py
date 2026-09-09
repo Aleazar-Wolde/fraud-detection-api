@@ -38,14 +38,34 @@ print(probabilities[:5])
 fraud_probabilities = probabilities[:,1]
 print(fraud_probabilities[:5])
 
-threshold = [0.5,0.4,0.3,0.2,0.1]
-custom_predictions = (fraud_probabilities >= threshold).astype(int)
-print(custom_predictions[:10])
+thresholds = [0.9,0.5,0.4,0.3,0.2,0.1, 0.0000001]
+# custom_predictions = (fraud_probabilities >= thresholds).astype(int)
+# print(custom_predictions[:10])
 
-custom_cm = confusion_matrix(Y_test, custom_predictions)
-custom_precision = precision_score(Y_test, custom_predictions)
-custom_recall = recall_score(Y_test, custom_predictions)
+# custom_cm = confusion_matrix(Y_test, custom_predictions)
+# custom_precision = precision_score(Y_test, custom_predictions)
+# custom_recall = recall_score(Y_test, custom_predictions)
 
-print(custom_cm)
-print("Custom precision:", custom_precision)
-print("Custom recall:", custom_recall)
+# print(custom_cm)
+# print("Custom precision:", custom_precision)
+# print("Custom recall:", custom_recall)
+
+for threshold in thresholds:
+    custom_predictions = (fraud_probabilities >= threshold).astype(int)
+
+    custom_cm = confusion_matrix(Y_test, custom_predictions)
+    custom_precision = precision_score(Y_test, custom_predictions)
+    custom_recall = recall_score(Y_test, custom_predictions)
+
+    print("Threshold:", threshold)
+    print(custom_cm)
+    print("Precision:", custom_precision)
+    print("Recall:", custom_recall)
+
+
+
+    
+
+
+    
+    
