@@ -9,13 +9,22 @@ X = df.drop("Class", axis=1)
 Y = df["Class"]
 model = LogisticRegression()
 
-X_train, X_test, Y_train, Y_test = train_test_split(
+X_train, X_temp, Y_train, Y_temp, = train_test_split(
     X,
     Y,
     test_size=0.2,
     random_state=42,
     stratify=Y
 ) 
+
+X_validation, X_test, Y_validation, Y_test = train_test_split(
+    X_temp,
+    Y_temp,
+    test_size= 0.5,
+    random_state= 42,
+    stratify= Y_temp
+)
+
 model.fit(X_train, Y_train)
 predictions  = model.predict(X_test)
 
@@ -64,7 +73,17 @@ for threshold in thresholds:
 
 
 
-    
+print(X_train.shape)
+print(X_validation.shape)
+print(X_test.shape)
+
+print(Y_train.shape)
+print(Y_validation.shape)
+print(Y_test.shape)
+
+print(Y_train.value_counts())
+print(Y_validation.value_counts())
+print(Y_test.value_counts())
 
 
     
