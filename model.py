@@ -26,45 +26,35 @@ X_validation, X_test, Y_validation, Y_test = train_test_split(
 )
 
 model.fit(X_train, Y_train)
-predictions  = model.predict(X_test)
+predictions  = model.predict(X_validation)
 
 print(predictions[:10])
-print(Y_test.iloc[:10].to_numpy())
+print(Y_validation.iloc[:10].to_numpy())
 # print(model.coef_)
 # print(model.intercept_)
 
-cm = confusion_matrix(Y_test, predictions)
+cm = confusion_matrix(Y_validation, predictions)
 print(cm)
 
-precision = precision_score(Y_test, predictions)
-recall = recall_score(Y_test, predictions)
+precision = precision_score(Y_validation, predictions)
+recall = recall_score(Y_validation, predictions)
 print("Precision:", precision)
 print("Recall:", recall)
 
-probabilities = model.predict_proba(X_test)
+probabilities = model.predict_proba(X_validation)
 print(probabilities[:5])
 
 fraud_probabilities = probabilities[:,1]
 print(fraud_probabilities[:5])
 
 thresholds = [0.9,0.5,0.4,0.3,0.2,0.1, 0.0000001]
-# custom_predictions = (fraud_probabilities >= thresholds).astype(int)
-# print(custom_predictions[:10])
-
-# custom_cm = confusion_matrix(Y_test, custom_predictions)
-# custom_precision = precision_score(Y_test, custom_predictions)
-# custom_recall = recall_score(Y_test, custom_predictions)
-
-# print(custom_cm)
-# print("Custom precision:", custom_precision)
-# print("Custom recall:", custom_recall)
 
 for threshold in thresholds:
     custom_predictions = (fraud_probabilities >= threshold).astype(int)
 
-    custom_cm = confusion_matrix(Y_test, custom_predictions)
-    custom_precision = precision_score(Y_test, custom_predictions)
-    custom_recall = recall_score(Y_test, custom_predictions)
+    custom_cm = confusion_matrix(Y_validation, custom_predictions)
+    custom_precision = precision_score(Y_validation, custom_predictions)
+    custom_recall = recall_score(Y_validation, custom_predictions)
 
     print("Threshold:", threshold)
     print(custom_cm)
@@ -86,5 +76,19 @@ print(Y_validation.value_counts())
 print(Y_test.value_counts())
 
 
-    
+new_custom_probabilities= model.predict_proba(X_test)
+test_fraud_probabilities = new_custom_probabilities[:, 1]
+
+thresholds =0.9
+
+custom_predictions = (test_fraud_probabilities >= thresholds).astype(int)
+custom_cm = confusion_matrix(Y_test, custom_predictions)
+custom_precision = precision_score(Y_test, custom_predictions)
+custom_recall = recall_score(Y_test, custom_predictions)
+
+print("Final Test Results")
+print("Threshold:", thresholds)
+print(custom_cm)
+print("Precision:", custom_precision)
+print("Recall:", custom_recall)
     
