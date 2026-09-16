@@ -23,11 +23,26 @@ This project is actively in development. Progress so far:
 - [x] Transaction request/response schemas (Pydantic)
 - [x] All 4 API endpoint routes defined
 - [x] PostgreSQL database connection configured
-- [ ] ML model training (in progress)
+- [x] Dataset loading and preprocessing
+- [x] Train / validation / test split
+- [x] Logistic Regression model training
+- [x] Precision, recall, and confusion matrix evaluation
+- [x] Threshold tuning using validation data
+- [x] Final test-set evaluation
+- [ ] Feature scaling and convergence improvement
+- [ ] Save trained model for API inference
 - [ ] Endpoint logic implementation
 - [ ] Docker containerization
 - [ ] AWS deployment
 - [ ] Dashboard
+
+## ML Training Notes
+
+- Each feature has its own learned coefficient (weight).
+- The same coefficient for a feature is shared across all training transactions.
+- During training, Logistic Regression adjusts coefficients and the intercept to reduce loss.
+- The current model reaches the default `max_iter=100` before convergence.
+- The next step is to apply feature scaling with `StandardScaler` and retrain the model.
 
 ## How to Run Locally
 
