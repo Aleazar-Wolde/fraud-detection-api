@@ -4,6 +4,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import precision_score, recall_score
 from sklearn.preprocessing import StandardScaler 
+import joblib
 
 df = pd.read_csv("data/archive/creditcard.csv") 
 X = df.drop("Class", axis=1)
@@ -98,4 +99,7 @@ print("Threshold:", threshold)
 print(custom_cm)
 print("Precision:", custom_precision)
 print("Recall:", custom_recall)
+
+joblib.dump(model, "fraud_model.pkl")
+joblib.dump(scaler, "scaler.pkl")
     

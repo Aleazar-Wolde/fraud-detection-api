@@ -1,3 +1,5 @@
 .env
 __pycache__/
 data/
+fraud_model.pkl
+scaler.pkl
