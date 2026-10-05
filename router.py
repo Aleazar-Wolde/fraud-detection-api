@@ -1,5 +1,6 @@
 from fastapi import APIRouter  
 from schemas import TransactionRequest, TransactionResponse
+from database import get_connection
 import joblib
 
 model = joblib.load("fraud_model.pkl")
@@ -42,14 +43,17 @@ def create_transaction(transaction: TransactionRequest):
         transaction.v28,
         transaction.amount
     ]]
-    scaled_trancation = scaler.transform(transaction_features)
-    probabilities = model.predict_proba(scaled_trancation)
+    scaled_transaction = scaler.transform(transaction_features)
+    probabilities = model.predict_proba(scaled_transaction)
     fraud_score = float(probabilities[0][1])
-    is_flagged = fraud_score >= 0.1
+    is_flagged = fraud_score >= FREAD_THRESHOLD
+    connection = get_connection()
+    cursor = connection.cursor()
 
 @router.get("/transactions")
 def get_all_transaction():
-    pass
+    TransactionRequest
+    
 
 @router.get("/transactions/flagged")
 def get_flagged_transactions():
