@@ -49,6 +49,10 @@ def create_transaction(transaction: TransactionRequest):
     is_flagged = fraud_score >= FREAD_THRESHOLD
     connection = get_connection()
     cursor = connection.cursor()
+    cursor.execute("SELECT * FROM transaction")
+    rows = cursor.fetchall()
+
+    
 
 @router.get("/transactions")
 def get_all_transaction():
