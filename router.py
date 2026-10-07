@@ -211,4 +211,11 @@ def get_flagged_transactions():
 
 @router.get("/transactions/{id}")
 def get_transaction_by_id(id: int):
-    pass
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT * FROM transaction WHERE id = %s",(id,))
+
+    rows = cursor.fetchone()
+    cursor.clsoe()
+    connection.close()
