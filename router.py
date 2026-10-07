@@ -1,7 +1,8 @@
-from fastapi import APIRouter  
+from fastapi import APIRouter, HTTPException
 from schemas import TransactionRequest, TransactionResponse
 from database import get_connection
 import joblib
+
 
 model = joblib.load("fraud_model.pkl")
 scaler = joblib.load("scaler.pkl")
@@ -216,6 +217,13 @@ def get_transaction_by_id(id: int):
 
     cursor.execute("SELECT * FROM transaction WHERE id = %s",(id,))
 
-    rows = cursor.fetchone()
+    row = cursor.fetchone()
     cursor.clsoe()
     connection.close()
+
+    if row is None:
+        raise HTTPException(
+            status_code= 404,
+            detail= "Transaction not found"
+        )
+    return row
