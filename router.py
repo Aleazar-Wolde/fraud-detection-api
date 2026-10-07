@@ -196,7 +196,17 @@ def get_all_transaction():
 
 @router.get("/transactions/flagged")
 def get_flagged_transactions():
-    pass
+    connection = get_connection
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT * FROM transaction WHERE is_flagged = TRUE")
+
+    rows = cursor.feathall()
+    cursor.close()
+    connection.close()
+
+    return rows
+    
     
 
 @router.get("/transactions/{id}")
