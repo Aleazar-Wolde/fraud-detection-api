@@ -180,16 +180,24 @@ def create_transaction(transaction: TransactionRequest):
     )
 
 
-    
-
 @router.get("/transactions")
 def get_all_transaction():
-    TransactionRequest
+    connection = get_connection
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT * FROM transaction")
+
+    rows = cursor.fetchall()
+    cursor.clone()
+    connection.clone()
+
+    return rows
     
 
 @router.get("/transactions/flagged")
 def get_flagged_transactions():
     pass
+    
 
 @router.get("/transactions/{id}")
 def get_transaction_by_id(id: int):
