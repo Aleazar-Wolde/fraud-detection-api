@@ -183,26 +183,26 @@ def create_transaction(transaction: TransactionRequest):
 
 @router.get("/transactions")
 def get_all_transaction():
-    connection = get_connection
+    connection = get_connection()
     cursor = connection.cursor()
 
-    cursor.execute("SELECT * FROM transaction")
-
+    cursor.execute("SELECT * FROM transactions")
     rows = cursor.fetchall()
-    cursor.clone()
-    connection.clone()
+
+    cursor.close()
+    connection.close()
 
     return rows
     
 
 @router.get("/transactions/flagged")
 def get_flagged_transactions():
-    connection = get_connection
+    connection = get_connection()
     cursor = connection.cursor()
 
-    cursor.execute("SELECT * FROM transaction WHERE is_flagged = TRUE")
+    cursor.execute("SELECT * FROM transactions WHERE is_flagged = TRUE")
 
-    rows = cursor.feathall()
+    rows = cursor.fetchall()
     cursor.close()
     connection.close()
 
@@ -215,10 +215,10 @@ def get_transaction_by_id(id: int):
     connection = get_connection()
     cursor = connection.cursor()
 
-    cursor.execute("SELECT * FROM transaction WHERE id = %s",(id,))
+    cursor.execute("SELECT * FROM transactions WHERE id = %s",(id,))
 
     row = cursor.fetchone()
-    cursor.clsoe()
+    cursor.close()
     connection.close()
 
     if row is None:
