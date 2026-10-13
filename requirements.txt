@@ -6,4 +6,8 @@ pandas
 pydantic
 python-dotenv
 pytest
+<<<<<<< HEAD
 httpx
+=======
+httpx
+>>>>>>> b4a2784c3589dc021b15315c11949dcdaa987e05
