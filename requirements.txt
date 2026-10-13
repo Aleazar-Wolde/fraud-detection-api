@@ -5,3 +5,5 @@ scikit-learn
 pandas
 pydantic
 python-dotenv
+pytest
+httpx
