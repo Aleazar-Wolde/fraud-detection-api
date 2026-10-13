@@ -157,11 +157,13 @@ def get_all_transaction():
     connection = get_connection()
     cursor = connection.cursor(cursor_factory=RealDictCursor)
 
-    cursor.execute("SELECT * FROM transactions")
-    rows = cursor.fetchall()
+    try:
+        cursor.execute("SELECT * FROM transactions")
+        rows = cursor.fetchall()
 
-    cursor.close()
-    connection.close()
+    finally:
+        cursor.close()
+        connection.close()
 
     return [dict(row) for row in rows]
     
