@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 from schemas import TransactionRequest, TransactionResponse
 from database import get_connection
 import joblib
+from psycopg2.extras import RealDictCursor
 
 
 model = joblib.load("fraud_model.pkl")
@@ -181,10 +182,10 @@ def create_transaction(transaction: TransactionRequest):
     )
 
 
-@router.get("/transactions")
+@router.get("/transactions",response_model=list[TransactionResponse])
 def get_all_transaction():
     connection = get_connection()
-    cursor = connection.cursor()
+    cursor = connection.cursor(cursor_factory=RealDictCursor)
 
     cursor.execute("SELECT * FROM transactions")
     rows = cursor.fetchall()
@@ -192,13 +193,13 @@ def get_all_transaction():
     cursor.close()
     connection.close()
 
-    return rows
+    return [dict(row) for row in rows]
     
 
-@router.get("/transactions/flagged")
+@router.get("/transactions/flagged",response_model=list[TransactionResponse])
 def get_flagged_transactions():
     connection = get_connection()
-    cursor = connection.cursor()
+    cursor = connection.cursor(cursor_factory=RealDictCursor)
 
     cursor.execute("SELECT * FROM transactions WHERE is_flagged = TRUE")
 
@@ -206,14 +207,14 @@ def get_flagged_transactions():
     cursor.close()
     connection.close()
 
-    return rows
+    return [dict(row) for row in rows]
     
     
 
-@router.get("/transactions/{id}")
+@router.get("/transactions/{id}", response_model=list[TransactionResponse])
 def get_transaction_by_id(id: int):
     connection = get_connection()
-    cursor = connection.cursor()
+    cursor = connection.cursor(cursor_factory=RealDictCursor)
 
     cursor.execute("SELECT * FROM transactions WHERE id = %s",(id,))
 
@@ -226,4 +227,4 @@ def get_transaction_by_id(id: int):
             status_code= 404,
             detail= "Transaction not found"
         )
-    return row
+    return dict(row)
