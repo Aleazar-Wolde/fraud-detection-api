@@ -33,7 +33,8 @@ TransactionResponse
 - **Database:** PostgreSQL, psycopg2
 - **Model persistence:** joblib
 - **API documentation/testing:** Swagger UI
-- **Planned:** Docker, AWS deployment, dashboard
+- **Containerization:** Docker, Docker Compose
+- **Planned:** AWS deployment, dashboard
 
 ## Current Status
 
@@ -264,7 +265,5 @@ The dataset contains 284,807 transactions with 492 fraud cases, making the class
 
 ## Next Steps
 
-1. Add automated API tests.
-2. Containerize the API and PostgreSQL setup with Docker.
-3. Deploy the backend and database.
-4. Add a lightweight fraud-review dashboard.
+1. Deploy the backend and database to AWS.
+2. Add a lightweight fraud-review dashboard.
