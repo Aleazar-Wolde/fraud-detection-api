@@ -58,8 +58,8 @@ Core backend functionality is working end-to-end.
 - [x] 404 handling for missing transaction IDs
 - [x] Structured JSON responses and FastAPI response models
 - [x] End-to-end API testing through Swagger UI
-- [ ] Automated tests
-- [ ] Docker containerization
+- [x] Automated tests
+- [x] Docker containerization
 - [ ] AWS deployment
 - [ ] Dashboard
 
