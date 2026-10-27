@@ -61,7 +61,7 @@ Core backend functionality is working end-to-end.
 - [x] End-to-end API testing through Swagger UI
 - [x] Automated tests
 - [x] Docker containerization
-- [ ] AWS deployment
+- [x] AWS deployment
 - [ ] Dashboard
 
 ## Machine Learning
